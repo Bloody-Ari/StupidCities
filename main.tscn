@@ -1,0 +1,119 @@
+[gd_scene load_steps=17 format=3 uid="uid://bdjuw8s5gsoeg"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_i4noh"]
+[ext_resource type="PackedScene" uid="uid://bs8fj4wgjsj5v" path="res://player.tscn" id="2_57hw3"]
+[ext_resource type="Texture2D" uid="uid://dj4espi5u34ay" path="res://art/FirstTileSet.png" id="2_jr4sj"]
+[ext_resource type="Script" path="res://grid.gd" id="3_rs8bf"]
+[ext_resource type="Texture2D" uid="uid://bruiw0pi0gsqq" path="res://art/SecondTileSet.png" id="5_frh7r"]
+[ext_resource type="Script" path="res://humidity_timer.gd" id="5_o1msm"]
+[ext_resource type="Script" path="res://plants_grid.gd" id="6_u4k5j"]
+[ext_resource type="PackedScene" uid="uid://byk58n8fk0m03" path="res://market.tscn" id="7_c74gr"]
+[ext_resource type="Script" path="res://to_do.gd" id="9_rf75t"]
+[ext_resource type="PackedScene" uid="uid://brfw4po7q85yl" path="res://aysa.tscn" id="10_mhnw1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tq83q"]
+texture = ExtResource("2_jr4sj")
+margins = Vector2i(1, 1)
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+7:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fnew8"]
+texture = ExtResource("5_frh7r")
+margins = Vector2i(1, 1)
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(128, 128)
+0:2/0 = 0
+1:2/0 = 0
+9:0/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_p05qu"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_tq83q")
+sources/1 = SubResource("TileSetAtlasSource_fnew8")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ruek6"]
+texture = ExtResource("5_frh7r")
+margins = Vector2i(1, 1)
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(128, 128)
+6:0/0 = 0
+6:1/0 = 0
+7:0/0 = 0
+9:0/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dom35"]
+texture = ExtResource("5_frh7r")
+margins = Vector2i(1, 1)
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+7:1/0 = 0
+1:1/0 = 0
+8:0/0 = 0
+9:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_k0gil"]
+tile_size = Vector2i(128, 128)
+sources/1 = SubResource("TileSetAtlasSource_ruek6")
+sources/2 = SubResource("TileSetAtlasSource_dom35")
+
+[node name="Node" type="Node"]
+script = ExtResource("1_i4noh")
+
+[node name="Grid" type="TileMapLayer" parent="."]
+z_index = 1
+z_as_relative = false
+tile_set = SubResource("TileSet_p05qu")
+script = ExtResource("3_rs8bf")
+debug = true
+
+[node name="PipesGrid" type="TileMapLayer" parent="."]
+z_index = 1
+z_as_relative = false
+tile_set = SubResource("TileSet_p05qu")
+
+[node name="HumidityTimer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("5_o1msm")
+
+[node name="PlantsGrid" type="TileMapLayer" parent="."]
+z_index = 2
+z_as_relative = false
+tile_set = SubResource("TileSet_k0gil")
+script = ExtResource("6_u4k5j")
+
+[node name="Player" parent="." instance=ExtResource("2_57hw3")]
+z_index = 3
+position = Vector2(576, 320)
+money = 1500
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Market" parent="." instance=ExtResource("7_c74gr")]
+position = Vector2(-206, -73)
+
+[node name="ToDo" type="Node" parent="."]
+script = ExtResource("9_rf75t")
+
+[node name="Area2D" parent="." instance=ExtResource("10_mhnw1")]
+
+[connection signal="timeout" from="HumidityTimer" to="Grid" method="_onHumidityTimer"]

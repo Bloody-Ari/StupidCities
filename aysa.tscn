@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://brfw4po7q85yl"]
+
+[ext_resource type="Texture2D" uid="uid://dihb6gq8q5r34" path="res://art/Aysa.png" id="1_8i4vi"]
+[ext_resource type="Script" path="res://aysa.gd" id="1_ubkg0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yr0qb"]
+size = Vector2(129, 128)
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_ubkg0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(64.5, 64)
+shape = SubResource("RectangleShape2D_yr0qb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 64)
+texture = ExtResource("1_8i4vi")
+
+[node name="AysaPlans" type="ItemList" parent="."]
+z_index = 5
+offset_left = 151.0
+offset_right = 405.0
+offset_bottom = 130.0
+auto_height = true
+
+[node name="AysaTimer" type="Timer" parent="."]
+wait_time = 60.0
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -43.0
+offset_right = 143.0
+offset_bottom = -19.0

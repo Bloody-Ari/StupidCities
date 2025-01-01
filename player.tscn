@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs8fj4wgjsj5v"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_00fnx"]
+[ext_resource type="Texture2D" uid="uid://0uy58euwhv4r" path="res://art/FemCharacter.png" id="1_sxggs"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lwnt5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_sxggs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_srr6k"]
+radius = 28.0
+height = 130.0
+
+[node name="Player" type="Area2D"]
+z_index = 2
+z_as_relative = false
+position = Vector2(582, 284)
+script = ExtResource("1_00fnx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lwnt5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_srr6k")
+
+[node name="SelectedTool" type="Node2D" parent="."]
+
+[node name="Hotbars" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Left Hotbar" type="ItemList" parent="Hotbars"]
+z_index = 4
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = 196.0
+offset_right = -30.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+max_columns = 10
+same_column_width = true
+icon_scale = 0.5
+
+[node name="Right Hotbar" type="ItemList" parent="Hotbars"]
+z_index = 4
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = 196.0
+offset_right = 568.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+auto_height = true
+max_columns = 10
+icon_scale = 0.5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="item_clicked" from="Hotbars/Left Hotbar" to="." method="_on_left_hotbar_item_clicked"]
+[connection signal="item_clicked" from="Hotbars/Right Hotbar" to="." method="_on_right_hotbar_item_clicked"]
