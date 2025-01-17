@@ -42,15 +42,7 @@ texture = ExtResource("2_jr4sj")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
-10:0/0 = 0
-10:1/0 = 0
-10:2/0 = 0
 0:3/0 = 0
-10:3/0 = 0
-10:4/0 = 0
-10:5/0 = 0
-10:6/0 = 0
-10:7/0 = 0
 9:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_dpf0q"]

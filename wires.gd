@@ -17,7 +17,8 @@ func add_cell(position):
 	set_cells_terrain_connect(wired_tiles, 0, 0)
 	
 func _ready() -> void:
-	add_cell({"value": true, "position": Vector2(0,0)})
+	#add_cell({"value": true, "position": Vector2(0,0)})
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
