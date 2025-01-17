@@ -70,5 +70,11 @@ static var tool_list = {
 		"",
 		preload("res://art/Waterer2.png"),
 		1
+	),
+	"humidity_checker3remote" : HumidityScreen.new(
+		"Screen",
+		"",
+		preload("res://art/Waterer3Remote.png"),
+		1
 	)
 }

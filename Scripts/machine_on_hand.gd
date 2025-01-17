@@ -15,6 +15,12 @@ func _init(_name):
 			texture = preload("res://art/Pipe.png")
 		"valve":
 			texture = preload("res://art/OpenPipeValve.png")
+		"aspersor_a_presion":
+			texture = preload("res://art/Machines/AutoWaterer2.png")
+		"humidity_checker1":
+			texture = preload("res://art/Waterer1Icon.png")
+		"humidity_checker3":
+			texture = preload("res://art/Waterer3Icon.png")
 
 func use(pos: Vector2, game_grid: GameGrid):
 	var player = game_grid.get_node("../Player")
@@ -28,6 +34,11 @@ func use(pos: Vector2, game_grid: GameGrid):
 			game_grid.add_child(game_grid.grid[pos].humidity_label)
 		"humidity_checker3":
 			game_grid.grid[pos].humidity_checker_type = 3
+			game_grid.humidity_network.append(pos)
+			game_grid.grid[pos].humidity_label.visible = false
+			game_grid.grid[pos].humidity_label.text = "Humidity level: "
+			game_grid.grid[pos].humidity_label.position = Vector2(pos.x*128, pos.y*128)
+			game_grid.add_child(game_grid.grid[pos].humidity_label)
 		"aspersor_basico":
 			game_grid.grid[pos].machine = Aspersor.new(
 				"Aspersor Basico",

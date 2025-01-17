@@ -20,6 +20,7 @@ var grid: Dictionary = {}
 var pipes_grid = []
 var drown_counter = 0
 var pipes_timer = Timer.new()
+var humidity_network = []
 
 signal onCell(pos)
 
@@ -131,10 +132,10 @@ func onUsingCell(pos: Vector2):
 		grid[Vector2(position.x, position.y)].valve_state = !grid[Vector2(position.x, position.y)].valve_state 
 		_onCellUpdate(position)
 	if player.left_click_tool != null:
-		if player.left_click_tool.name == "Check" :
+		if player.left_click_tool.name == "Check" or "humidity_checker3remote":
 			player.left_click_tool.use(position, self)
 	if player.right_click_tool != null:
-		if player.right_click_tool.name == "Check" :
+		if player.right_click_tool.name == "Check" or "humidity_checker3remoteS":
 			player.right_click_tool.use(position, self)
 
 func _onPickedUpSeeds(ammount: int):

@@ -43,6 +43,8 @@ func _adjust_hotbars():
 	# get items, if item is sunflowerbag or plastic bags adjust text
 	var index = 0
 	var bag_text = null
+	left_hotbar_contents.sort()
+	right_hotbar_contents.sort()
 	for item in left_hotbar_contents:
 		if(item == null):
 			index += 1
@@ -60,6 +62,7 @@ func _adjust_hotbars():
 		if(item.name == "Empty Plastic Bag"):
 			#left_hotbar.position
 			bag_text = right_hotbar.get_child(0)
+			#right_hotbar.set_item_text(index, str(index))
 			if bag_text != null:
 				bag_text.set_position(Vector2(64*(index+1), 0))
 		index += 1
@@ -103,8 +106,8 @@ func remove_n_from_inventory(item, n):
 				removed_items += 1
 			i+=1
 		i=0
-		if(removed_items >= n ):
-			break
+		#if(removed_items >= n ):
+			#break
 		for _item in left_hotbar_contents:
 			if _item == item and removed_items < n:
 				left_hotbar_contents.remove_at(i)
@@ -335,10 +338,10 @@ func _process(delta: float) -> void:
 		if using_left:
 			return
 		if(right_click_tool == null):
-			print("got null tool on right hand")
+			#print("got null tool on right hand")
 			return
 		if(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).x < 0 or game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).y < 0):
-			print("Out of bounds")
+			#print("Out of bounds")
 			return
 		using_right = true
 		#use_progress_bar.position = position
@@ -357,10 +360,10 @@ func _process(delta: float) -> void:
 		if using_right:
 			return
 		if(left_click_tool == null):
-			print("got null tool on left hand")
+			#print("got null tool on left hand")
 			return
 		if(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).x < 0 or game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).y < 0):
-			print("Out of bounds")
+			#print("Out of bounds")
 			return
 		using_left =true
 		use_progress_bar.visible = true
