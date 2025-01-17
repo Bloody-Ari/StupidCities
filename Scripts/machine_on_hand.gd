@@ -20,6 +20,14 @@ func use(pos: Vector2, game_grid: GameGrid):
 	var player = game_grid.get_node("../Player")
 	print("placing: ", name, " in position: ", pos)
 	match name:
+		"humidity_checker1":
+			game_grid.grid[pos].humidity_checker_type = 1
+			game_grid.grid[pos].humidity_label.visible = false
+			game_grid.grid[pos].humidity_label.text = "Dirt humidity level: "
+			game_grid.grid[pos].humidity_label.position = Vector2(pos.x*128, pos.y*128)
+			game_grid.add_child(game_grid.grid[pos].humidity_label)
+		"humidity_checker3":
+			game_grid.grid[pos].humidity_checker_type = 3
 		"aspersor_basico":
 			game_grid.grid[pos].machine = Aspersor.new(
 				"Aspersor Basico",

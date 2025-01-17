@@ -82,6 +82,8 @@ func _ready() -> void:
 	buying_bar.add_item("50   -better_gloves", preload("res://art/Gloves2.png"), true)
 	buying_bar.add_item("50   -better_hoe", preload("res://art/Hoe2.png"), true)
 	buying_bar.add_item("10   -basic_bucket", preload("res://art/Balde.png"), true)
+	buying_bar.add_item("75   -humidity_checker2", preload("res://art/Waterer2.png"), true)
+	buying_bar.add_item("175  -humidity_checker3remote", preload("res://art/Waterer3Remote.png"))
 	
 	selling_bar.add_item("10   -sprinkler", preload("res://art/Sprinkler.png"), true)
 	selling_bar.add_item("20   -bolsa_de_pipas", preload("res://art/Bolsita10Pipas.png"), true)
@@ -91,6 +93,8 @@ func _ready() -> void:
 	machine_buy_bar.add_item("250   -aspersor_a_presion", preload("res://art/Machines/AutoWaterer2.png"), true)
 	machine_buy_bar.add_item("10   -pipe", preload("res://art/Pipe.png"), true)
 	machine_buy_bar.add_item("20   -valve", preload("res://art/ClosedPipeValve.png"), true)
+	machine_buy_bar.add_item("100  -humidity_checker1", preload("res://art/Waterer1Icon.png"), true)
+	machine_buy_bar.add_item("150  -humidity_checker3", preload("res://art/Waterer3Icon.png"), true)
 	
 	var buy_text = Label.new()
 	buy_text.text = "Buy!"

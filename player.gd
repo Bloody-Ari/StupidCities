@@ -11,7 +11,7 @@ extends Area2D
 var right_hotbar_contents: Array = []
 var left_hotbar_contents: Array = []
 @export var money = 100
-
+@onready var wire_layer = $"../WireLayer"
 var using_right = false
 var using_left = false
 
@@ -28,6 +28,7 @@ var seeds_bag_quantity = Label.new()
 var empty_plastic_bag_quantity = Label.new()
 var ten_seed_bag_quantity = Label.new()
 var bucket_level_label = Label.new()
+var humidity_label = Label.new()
 
 var use_progress_bar = ProgressBar.new()
 
@@ -224,6 +225,8 @@ func _ready() -> void:
 	use_progress_bar.size = Vector2(200, 20)
 	use_progress_bar.position = Vector2(position.x-100, position.y-100)
 	hotbars.add_child(use_progress_bar)
+	humidity_label.visible = true
+	add_child(humidity_label)
 #you have 2 different sets of hotbars, one for right click, 1-0 
 #and one for left click shift 1-0
 func _input(event: InputEvent) -> void:
@@ -270,6 +273,7 @@ func _process(delta: float) -> void:
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, Vector2(game_grid.width*128, game_grid.height*128))
+	humidity_label.position = Vector2(position.x/128-100, position.y/128-100)
 	game_grid.onCell.emit(position)
 
 	if Input.is_action_just_pressed("select_left_hotbar_one") and !Input.is_action_pressed("select_right_hotbar_one"): #as spaggeti as it gets LOL
@@ -369,6 +373,9 @@ func _process(delta: float) -> void:
 		use_progress_bar.value = 0
 		use_progress_bar.visible = false
 		#emit signal
+	if Input.is_action_just_pressed("Place Wire"):
+		#print(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())))
+		wire_layer.add_cell(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())))
 
 func _on_right_hotbar_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	right_click_tool = right_hotbar_contents[index]

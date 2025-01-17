@@ -64,5 +64,11 @@ static var tool_list = {
 		"",
 		preload("res://art/Balde.png"),
 		1
+	),
+	"humidity_checker2" : OnHandHumidityChecker.new(
+		"Check",
+		"",
+		preload("res://art/Waterer2.png"),
+		1
 	)
 }

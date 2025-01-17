@@ -14,6 +14,8 @@ var plant_states = ["Plowed", "Planted", "FirstGrow", "SecondGrow", "ThirdGrow",
 @onready var pipes_texture_grid = $"../PipesGrid"
 @onready var player = $"../Player"
 @onready var aysa = $"../Area2D"
+@onready var wire_layer = $"../WireLayer"
+@onready var checkers_layer = $"../HumidityCheckersLayer"
 var grid: Dictionary = {}
 var pipes_grid = []
 var drown_counter = 0
@@ -39,6 +41,15 @@ func _onCell(pos):
 		grid[position].pipe_label.visible = true		
 		timer.timeout.connect(func():
 			grid[position].pipe_label.visible = false
+		)
+	if grid[position].humidity_checker_type == 1:
+		var timer = Timer.new()
+		add_child(timer)
+		timer.start(1)
+		grid[position].humidity_label.text[-1] = str(int(grid[position].humidity))
+		grid[position].humidity_label.visible = true
+		timer.timeout.connect(func():
+			grid[position].humidity_label.visible = false
 		)
 
 func generateGrid():
@@ -119,6 +130,12 @@ func onUsingCell(pos: Vector2):
 	if grid[Vector2(position.x, position.y)].valve_state != null:
 		grid[Vector2(position.x, position.y)].valve_state = !grid[Vector2(position.x, position.y)].valve_state 
 		_onCellUpdate(position)
+	if player.left_click_tool != null:
+		if player.left_click_tool.name == "Check" :
+			player.left_click_tool.use(position, self)
+	if player.right_click_tool != null:
+		if player.right_click_tool.name == "Check" :
+			player.right_click_tool.use(position, self)
 
 func _onPickedUpSeeds(ammount: int):
 	var seeds_index = 0
@@ -170,7 +187,14 @@ func _ready() -> void:
 	pipes_timer.timeout.connect(_onPipesTimer)
 	add_child(pipes_timer)
 	pipes_timer.start(1)
-	
+'''
+	wire_layer.wired_tiles.append(Vector2(0,0))
+	wire_layer.wired_tiles.append(Vector2(0,1))
+	wire_layer.wired_tiles.append(Vector2(0,2))
+	wire_layer.wired_tiles.append(Vector2(0,3))
+	wire_layer.wired_tiles.append(Vector2(1, 0))
+	wire_layer.wired_tiles.append(Vector2(1, 1))
+'''	
 	# Te hacercas, te spawnea la lista y podes seleccionar el nivel, sea 0, 1 o 2
 	# se te cobra cuando elegis y, si tenes la plata, cada vez que corre el timer
 
@@ -252,6 +276,7 @@ func updateCellTile(pos:Vector2):
 	var new_plant_tile: Vector2 = Vector2(-1, -1)
 	var new_machine_tile: Vector2 = Vector2(-1, -1)
 	var new_pipe_tile: Vector2 = Vector2(-1, -1)
+	var new_humidity_checker_tile = Vector2(-1, -1)
 	match cell.state:
 		"DryDirt":
 			new_tile = Vector2(2, 0)
@@ -283,6 +308,7 @@ func updateCellTile(pos:Vector2):
 			new_plant_tile = Vector2(5, 1)
 		"DrownedPlant":
 			new_plant_tile = Vector2(9, 1)
+
 # NO puede haber maquina y ca;o al mismo tiempo
 	if(cell.machine != null):
 		match cell.machine.name:
@@ -295,6 +321,13 @@ func updateCellTile(pos:Vector2):
 				new_machine_tile = Vector2(6, 1)
 			"Aspersor a presion":
 				new_machine_tile = Vector2(2, 2)
+	
+	if cell.humidity_checker_type != null:
+		match cell.humidity_checker_type:
+			1:
+				new_humidity_checker_tile = Vector2(0, 3)
+			3:
+				new_humidity_checker_tile = Vector2(9, 2)
 
 	if pos == Vector2(0,0):
 		new_pipe_tile = Vector2(3,2)
@@ -315,6 +348,9 @@ func updateCellTile(pos:Vector2):
 		plants_grid.set_cell(pos, 1, new_machine_tile)
 	if(new_pipe_tile > Vector2(-1, -1)):
 		pipes_texture_grid.set_cell(pos, 1, new_pipe_tile)
+	if(new_humidity_checker_tile > Vector2(-1,-1)):
+		checkers_layer.set_cell(pos, 0, new_humidity_checker_tile)
+
 
 func _onHumidityTimer():
 	for cell in grid:
@@ -323,7 +359,7 @@ func _onHumidityTimer():
 		if grid[cell].humidity >= 1:
 			grid[cell].humidity -= 0.5
 			grid[cell].onChangedCell.emit(cell)
-			
+
 func _onChangedMachineAmmount():
 	print("Changed ammount of machines on the map")
 

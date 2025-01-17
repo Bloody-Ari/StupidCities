@@ -20,8 +20,11 @@ var machine_state : String = "None" #you can have a machine OR a flower, not bot
 var machine: Machine = null
 var pipe_state = null
 var pipe_label
+var humidity_label = Label.new()
 var valve_state = null
 var aysa = false
+var humidity_checker_type = null
+var humidity_checker = null
 
 """
 States:
