@@ -24,6 +24,11 @@ var humidity_network = []
 
 signal onCell(pos)
 
+func remove_pipe(pos):
+	if grid[pos].pipe_state != null:
+		if !grid[pos].aysa:
+			print("Removing pipe on cell: ", pos)
+
 func _onCell(pos):
 	var position = Vector2(local_to_map(to_local(pos)).x, local_to_map(to_local(pos)).y)
 	if grid[position].machine != null:
@@ -337,7 +342,7 @@ func updateCellTile(pos:Vector2):
 			if cell.valve_state:
 				new_pipe_tile = Vector2(1, 2)
 			else:
-				new_pipe_tile = Vector2(0, 2)		
+				new_pipe_tile = Vector2(0, 2)
 		elif cell.pipe_state != null:
 			new_pipe_tile = Vector2(9, 0)
 

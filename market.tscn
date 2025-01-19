@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://byk58n8fk0m03"]
+[gd_scene load_steps=5 format=3 uid="uid://byk58n8fk0m03"]
 
 [ext_resource type="Script" path="res://market.gd" id="1_oc34m"]
 [ext_resource type="Texture2D" uid="uid://mgpulgsuomi4" path="res://art/Market.png" id="1_wttsx"]
+[ext_resource type="Script" path="res://sell_button.gd" id="3_nh3cl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ltk1s"]
 size = Vector2(125.372, 114.207)
@@ -31,10 +32,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 874.0
-offset_top = 243.0
-offset_right = 1486.0
-offset_bottom = 357.0
+offset_left = 665.0
+offset_top = 242.0
+offset_right = 1277.0
+offset_bottom = 356.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2
@@ -53,10 +54,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 1150.0
-offset_top = 394.0
-offset_right = 2146.0
-offset_bottom = 438.0
+offset_left = 667.0
+offset_top = 565.0
+offset_right = 2014.0
+offset_bottom = 609.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.443872, 2.60438)
@@ -70,24 +71,10 @@ icon_mode = 0
 icon_scale = 0.5
 fixed_icon_size = Vector2i(1024, 128)
 
-[node name="Selling Bar" type="ItemList" parent="."]
-z_index = 4
-z_as_relative = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 878.0
-offset_top = 575.0
-offset_right = 1147.0
-offset_bottom = 689.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 2
-auto_height = true
-text_overrun_behavior = 0
-max_columns = 6
-same_column_width = true
-icon_mode = 0
-icon_scale = 0.5
+[node name="Button" type="Button" parent="."]
+offset_left = 503.0
+offset_top = 408.0
+offset_right = 614.0
+offset_bottom = 504.0
+text = "Sell"
+script = ExtResource("3_nh3cl")

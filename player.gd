@@ -49,7 +49,7 @@ func _adjust_hotbars():
 		if(item == null):
 			index += 1
 			continue
-		if(item.name == "Empty Plastic Bag"):
+		if(item.name == "Empty Plastic Bag" or item.name == "Sunflower Seeds Bag"):
 			#left_hotbar.position
 			bag_text = left_hotbar.get_child(0)
 			if bag_text != null:
@@ -59,11 +59,13 @@ func _adjust_hotbars():
 		if(item == null):
 			index += 1
 			continue
-		if(item.name == "Empty Plastic Bag"):
+		if(item.name == "Empty Plastic Bag" or item.name == "Sunflower Seeds Bag"):
 			#left_hotbar.position
 			bag_text = right_hotbar.get_child(0)
-			#right_hotbar.set_item_text(index, str(index))
+			right_hotbar.set_item_text(index, str(index))
+			print("Bag text: ", bag_text)
 			if bag_text != null:
+				print(bag_text)
 				bag_text.set_position(Vector2(64*(index+1), 0))
 		index += 1
 
@@ -248,12 +250,18 @@ func update_tools():
 
 func _onLongPressRight(press):
 	if press >= 2:
-		right_click_tool.use(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())), game_grid)
+		if left_click_tool == null:
+			game_grid.remove_pipe(Vector2(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position()))))
+		else:
+			right_click_tool.use(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())), game_grid)
 		right_press = 0
 
 func _onLongPressLeft(press):
 	if press >= 2:
-		left_click_tool.use(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())), game_grid)
+		if left_click_tool == null:
+			game_grid.remove_pipe(Vector2(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position()))))
+		else:
+			left_click_tool.use(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())), game_grid)
 		left_press = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -337,9 +345,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("use_right"):
 		if using_left:
 			return
-		if(right_click_tool == null):
-			#print("got null tool on right hand")
-			return
 		if(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).x < 0 or game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).y < 0):
 			#print("Out of bounds")
 			return
@@ -358,9 +363,6 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_pressed("use_left"):
 		if using_right:
-			return
-		if(left_click_tool == null):
-			#print("got null tool on left hand")
 			return
 		if(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).x < 0 or game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())).y < 0):
 			#print("Out of bounds")

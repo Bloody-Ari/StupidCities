@@ -8,19 +8,22 @@ static var tool_list = {
 		"Hoe",
 		"Powels a tile to allow you to plant seeds!",
 		preload("res://art/Hoe.png"),
-		1
+		1,
+		100
 	),
 	"gloves" : Gloves.new(
 		"Gloves",
 		"Allows you to pickup things from a tile!",
 		preload("res://art/Gloves.png"),
-		1
+		1,
+		100
 	),
 	"sprinkler" : Sprinkler.new(
 		"Sprinkler",
 		"Just a sprinkler, you have to fill it from time to time and don't let it's water rot!",
 		preload("res://art/Sprinkler.png"),
-		1
+		1,
+		100
 	),
 	"sunflower_seeds_bag" : SunflowerSeedsBag.new(
 		"Sunflower Seeds Bag",
@@ -33,7 +36,8 @@ static var tool_list = {
 		"Sprinkler Mk2",
 		"A better sprinkler, holds more water and let's you water more tiles at a time",
 		preload("res://art/Sprinkler2.png"),
-		2
+		2,
+		100
 	),
 	"plastic_bag" : EmptyPlasticBag.new(
 		"Empty Plastic Bag",
@@ -46,18 +50,22 @@ static var tool_list = {
 		"Bolsa de Pipas", 
 		"Una bolsa con 10 semillas de girasol empaquetadas", 
 		preload("res://art/Bolsita10Pipas.png"), 
-		1),
+		1,
+		100
+	),
 	"better_gloves" : Gloves.new(
 		"Guantes grandes",
 		"Guantes mas grandes y resistenes",
 		preload("res://art/Gloves2.png"),
-		2
+		2,
+		100
 	),
 	"better_hoe" : Hoe.new(
 		"Better Hoe",
 		"Just that, a hoe but better. What did you expect?",
 		preload("res://art/Hoe2.png"),
-		2
+		2,
+		100
 	),
 	"basic_bucket" : Bucket.new(
 		"Balde",
@@ -75,6 +83,7 @@ static var tool_list = {
 		"Screen",
 		"",
 		preload("res://art/Waterer3Remote.png"),
-		1
+		1,
+		100
 	)
 }
