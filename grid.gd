@@ -16,6 +16,7 @@ var plant_states = ["Plowed", "Planted", "FirstGrow", "SecondGrow", "ThirdGrow",
 @onready var aysa = $"../Area2D"
 @onready var wire_layer = $"../WireLayer"
 @onready var checkers_layer = $"../HumidityCheckersLayer"
+var pipe_lock = false
 var grid: Dictionary = {}
 var pipes_grid = []
 var drown_counter = 0
@@ -25,9 +26,18 @@ var humidity_network = []
 signal onCell(pos)
 
 func remove_pipe(pos):
-	if grid[pos].pipe_state != null:
+	#print("About to remove pipe with locked state: ", pipe_lock)
+	if grid[pos].pipe_state != null and !pipe_lock:
 		if !grid[pos].aysa:
-			print("Removing pipe on cell: ", pos)
+			pipe_lock = true
+			#print("Removing pipe on cell: ", pos)
+			player.append_to_inventory(MachineOnHand.new("pipe"))
+			grid[pos].pipe_state = null
+			grid[pos].valve_state = null
+			pipes_grid.erase(pos)
+			#print(pipes_grid)
+			updateCellTile(pos)
+			pipe_lock = false
 
 func _onCell(pos):
 	var position = Vector2(local_to_map(to_local(pos)).x, local_to_map(to_local(pos)).y)
@@ -69,8 +79,13 @@ func generateGrid():
 func _onPipesTimer():
 	var adjacent_cells
 	var adjacent_machines
+	if pipe_lock:
+		return
+	else:
+		pipe_lock = true
 
 	for cell in pipes_grid:
+		pipe_lock = true
 		adjacent_cells = []
 		adjacent_machines = []
 		if cell < Vector2(0, 0):
@@ -122,6 +137,8 @@ func _onPipesTimer():
 						grid[machine].machine.water_level -= 1
 			grid[cell].pipe_label.text[-1] = str(grid[cell].pipe_state)
 		#if(cell.pipes_grid)
+	#print("Releasing pipe")
+	pipe_lock = false
 
 signal ChangedSeedAmount(new_value: int)
 signal PickedUpSeeds(ammount: int)
@@ -345,6 +362,8 @@ func updateCellTile(pos:Vector2):
 				new_pipe_tile = Vector2(0, 2)
 		elif cell.pipe_state != null:
 			new_pipe_tile = Vector2(9, 0)
+		else:
+			new_pipe_tile = Vector2(5, 0)
 
 	if(new_tile > Vector2(-1, -1)):
 		set_cell(pos, 0, new_tile)
@@ -353,7 +372,7 @@ func updateCellTile(pos:Vector2):
 	if(new_machine_tile > Vector2(-1, -1)):
 		plants_grid.set_cell(pos, 1, new_machine_tile)
 	if(new_pipe_tile > Vector2(-1, -1)):
-		pipes_texture_grid.set_cell(pos, 1, new_pipe_tile)
+		pipes_texture_grid.set_cell(pos, 0, new_pipe_tile)
 	if(new_humidity_checker_tile > Vector2(-1,-1)):
 		checkers_layer.set_cell(pos, 0, new_humidity_checker_tile)
 

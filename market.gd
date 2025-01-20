@@ -96,7 +96,6 @@ func _ready() -> void:
 	machine_buy_bar.add_item("20   -valve", preload("res://art/ClosedPipeValve.png"), true)
 	machine_buy_bar.add_item("100  -humidity_checker1", preload("res://art/Waterer1Icon.png"), true)
 	machine_buy_bar.add_item("150  -humidity_checker3", preload("res://art/Waterer3Icon.png"), true)
-
 	var buy_text = Label.new()
 	buy_text.text = "Buy!"
 	buying_bar.add_child(buy_text)

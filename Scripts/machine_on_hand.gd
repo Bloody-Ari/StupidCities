@@ -82,6 +82,7 @@ func use(pos: Vector2, game_grid: GameGrid):
 			game_grid.grid[pos].pipe_label.position = Vector2(pos.x*128, pos.y*128)
 			game_grid.add_child(game_grid.grid[pos].pipe_label)
 			game_grid.pipes_grid.append(pos)
+			print("New pipes grid: ", game_grid.pipes_grid)
 			game_grid.pipes_grid.sort()
 		"valve":
 			game_grid.grid[pos].pipe_state = 0

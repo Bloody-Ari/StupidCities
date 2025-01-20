@@ -63,9 +63,7 @@ func _adjust_hotbars():
 			#left_hotbar.position
 			bag_text = right_hotbar.get_child(0)
 			right_hotbar.set_item_text(index, str(index))
-			print("Bag text: ", bag_text)
 			if bag_text != null:
-				print(bag_text)
 				bag_text.set_position(Vector2(64*(index+1), 0))
 		index += 1
 
@@ -250,9 +248,10 @@ func update_tools():
 
 func _onLongPressRight(press):
 	if press >= 2:
-		if left_click_tool == null:
+		if right_click_tool == null:
 			game_grid.remove_pipe(Vector2(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position()))))
 		else:
+			print("Using right")
 			right_click_tool.use(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())), game_grid)
 		right_press = 0
 
@@ -261,8 +260,29 @@ func _onLongPressLeft(press):
 		if left_click_tool == null:
 			game_grid.remove_pipe(Vector2(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position()))))
 		else:
+			print("Using left")
 			left_click_tool.use(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())), game_grid)
 		left_press = 0
+
+# KISS 
+# aaaaand I can't really use pointers so I cant get that smart with this
+func SelectFromRightHotbar(item_index: int):
+	if right_click_tool == right_hotbar_contents[item_index]:
+		right_click_tool = null
+		right_hotbar.deselect_all()
+		right_hotbar.release_focus()
+	else:
+		right_click_tool = right_hotbar_contents[item_index]
+		right_hotbar.select(item_index)
+
+func SelectFromLeftHotbar(item_index: int):
+	if left_click_tool == left_hotbar_contents[item_index]:
+		left_click_tool = null
+		left_hotbar.deselect_all()
+		left_hotbar.release_focus()
+	else:
+		left_click_tool = left_hotbar_contents[item_index]
+		left_hotbar.select(item_index)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -288,53 +308,39 @@ func _process(delta: float) -> void:
 	game_grid.onCell.emit(position)
 
 	if Input.is_action_just_pressed("select_left_hotbar_one") and !Input.is_action_pressed("select_right_hotbar_one"): #as spaggeti as it gets LOL
-		left_click_tool = left_hotbar_contents[0]
-		left_hotbar.select(0)
-		#update_tools() #idk if I'll use it for sth like sprites but for now just to print shit
+		SelectFromLeftHotbar(0)
+
 	if Input.is_action_just_pressed("select_left_hotbar_two") and !Input.is_action_just_pressed("select_right_hotbar_two"):
-		left_click_tool = left_hotbar_contents[1]
-		left_hotbar.select(1)
-		#update_tools()
+		SelectFromLeftHotbar(1)
+
 	if Input.is_action_just_pressed("select_left_hotbar_three") and !Input.is_action_just_pressed("select_right_hotbar_three"):
-		left_click_tool = left_hotbar_contents[2]
-		left_hotbar.select(2)
-		#update_tools()
+		SelectFromLeftHotbar(2)
+	
 	if Input.is_action_just_pressed("select_left_hotbar_four") and !Input.is_action_just_pressed("select_right_hotbar_four"):
-		left_click_tool = left_hotbar_contents[3]
-		left_hotbar.select(3)
-		#update_tools()
+		SelectFromLeftHotbar(3)
+
 	if Input.is_action_just_pressed("select_left_hotbar_five") and !Input.is_action_just_pressed("select_right_hotbar_five"):
-		left_click_tool = left_hotbar_contents[4]
-		left_hotbar.select(4)
-		#update_tools()
+		SelectFromLeftHotbar(4)
+
 	if Input.is_action_just_pressed("select_left_hotbar_six") and !Input.is_action_just_pressed("select_right_hotbar_six"):
-		left_click_tool = left_hotbar_contents[5]
-		left_hotbar.select(5)
-		#update_tools()
+		SelectFromLeftHotbar(5)
+		
 	if Input.is_action_just_pressed("select_right_hotbar_one"):
-		right_click_tool = right_hotbar_contents[0]
-		right_hotbar.select(0)
-		#update_tools()
+		SelectFromRightHotbar(0)
+		#This is the previous way to do it, I am leaving it here just in case
+		#right_click_tool = right_hotbar_contents[0]
+		#right_hotbar.select(0)
+		
 	if Input.is_action_just_pressed("select_right_hotbar_two"):
-		right_click_tool = right_hotbar_contents[1]
-		right_hotbar.select(1)
-		#update_tools()
+		SelectFromRightHotbar(1)
 	if Input.is_action_just_pressed("select_right_hotbar_three"):
-		right_click_tool = right_hotbar_contents[2]
-		right_hotbar.select(2)
-		#update_tools()
+		SelectFromRightHotbar(2)
 	if Input.is_action_just_pressed("select_right_hotbar_four"):
-		right_click_tool = right_hotbar_contents[3]
-		right_hotbar.select(3)
-		#update_tools()
+		SelectFromRightHotbar(3)
 	if Input.is_action_just_pressed("select_right_hotbar_five"):
-		right_click_tool = right_hotbar_contents[4]
-		right_hotbar.select(4)
-		#update_tools()
+		SelectFromRightHotbar(4)
 	if Input.is_action_just_pressed("select_right_hotbar_six"):
-		right_click_tool = right_hotbar_contents[5]
-		right_hotbar.select(5)
-		#update_tools()
+		SelectFromRightHotbar(5)
 
 	if Input.is_action_just_pressed("Open Inventory"):
 		#_toggle_inventory()
@@ -383,10 +389,19 @@ func _process(delta: float) -> void:
 		wire_layer.add_cell(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())))
 
 func _on_right_hotbar_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
-	right_click_tool = right_hotbar_contents[index]
+	if right_click_tool == right_hotbar_contents[index]:
+		right_click_tool = null
+		right_hotbar.deselect_all()
+		right_hotbar.release_focus()
+	else:
+		right_click_tool = right_hotbar_contents[index]
 	#update_tools()
 
-
 func _on_left_hotbar_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
-	left_click_tool = left_hotbar_contents[index]
+	if left_click_tool == left_hotbar_contents[index]:
+		left_click_tool = null
+		left_hotbar.deselect_all()
+		left_hotbar.release_focus()
+	else:
+		left_click_tool = left_hotbar_contents[index]
 	#update_tools()
