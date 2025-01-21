@@ -21,6 +21,7 @@ var plant_states = ["Plowed", "Planted", "FirstGrow", "SecondGrow", "ThirdGrow",
 @onready var aysa = $"../Area2D"
 @onready var wire_layer = $"../WireLayer"
 @onready var checkers_layer = $"../HumidityCheckersLayer"
+@onready var hotbars = $"../Player/Hotbars"
 var pipe_lock = false
 var grid: Dictionary = {}
 var pipes_grid = []
@@ -195,18 +196,23 @@ func _ready() -> void:
 	seeds_display.position = Vector2(-350, -300)
 
 	monero.text = str("  in your wallet: ")
-	monero.position = Vector2(-560, -250)
+	monero.position = Vector2(20, 10)
+	monero.set("theme_override_fonts/font", load("res://art/FiraCodeNerdFont-Medium.ttf"))
+	monero.set("theme_override_font_sizes/font_size", 32)
 	monero_display.text = str(player.money)
-	monero_display.position = Vector2(-350, -250)
+	monero_display.set("theme_override_fonts/font", load("res://art/FiraCodeNerdFont-Medium.ttf"))
+	monero_display.set("theme_override_font_sizes/font_size", 32)
+	monero_display.position = Vector2(390, 10)
+	#monero_display.position = Vector2(-350, -250)
 
 	seeds.z_index = 4
 	monero.z_index = 4
 	seeds_display.z_index = 4
 	monero_display.z_index = 4
 	#player.add_child(seeds)
-	player.add_child(monero)
+	hotbars.add_child(monero)
 	#player.add_child(seeds_display)
-	player.add_child(monero_display)
+	hotbars.add_child(monero_display)
 
 	ChangedSeedAmount.connect(_onChangedSeedAmount)
 	PickedUpSeeds.connect(_onPickedUpSeeds)

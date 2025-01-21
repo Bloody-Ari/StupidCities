@@ -1,18 +1,18 @@
-[gd_scene load_steps=22 format=3 uid="uid://bdjuw8s5gsoeg"]
+[gd_scene load_steps=22 format=3 uid="uid://0rna3yiv5fb4"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_i4noh"]
-[ext_resource type="PackedScene" uid="uid://bs8fj4wgjsj5v" path="res://player.tscn" id="2_57hw3"]
-[ext_resource type="Texture2D" uid="uid://dj4espi5u34ay" path="res://art/FirstTileSet.png" id="2_jr4sj"]
-[ext_resource type="Script" path="res://grid.gd" id="3_rs8bf"]
-[ext_resource type="Texture2D" uid="uid://bruiw0pi0gsqq" path="res://art/SecondTileSet.png" id="5_frh7r"]
-[ext_resource type="Script" path="res://humidity_timer.gd" id="5_o1msm"]
-[ext_resource type="Script" path="res://plants_grid.gd" id="6_u4k5j"]
-[ext_resource type="PackedScene" uid="uid://byk58n8fk0m03" path="res://market.tscn" id="7_c74gr"]
-[ext_resource type="PackedScene" uid="uid://brfw4po7q85yl" path="res://aysa.tscn" id="10_mhnw1"]
-[ext_resource type="PackedScene" uid="uid://by5lqfbrkduik" path="res://wires.tscn" id="11_e7ngf"]
+[ext_resource type="Script" path="res://main.gd" id="1_lmlsb"]
+[ext_resource type="Texture2D" uid="uid://dj4espi5u34ay" path="res://art/FirstTileSet.png" id="2_u57om"]
+[ext_resource type="Texture2D" uid="uid://bruiw0pi0gsqq" path="res://art/SecondTileSet.png" id="3_lbqoj"]
+[ext_resource type="Script" path="res://grid.gd" id="4_0d6mm"]
+[ext_resource type="Script" path="res://humidity_timer.gd" id="5_hmt5n"]
+[ext_resource type="Script" path="res://plants_grid.gd" id="6_lrusm"]
+[ext_resource type="PackedScene" uid="uid://bs8fj4wgjsj5v" path="res://player.tscn" id="7_ji4ki"]
+[ext_resource type="PackedScene" uid="uid://byk58n8fk0m03" path="res://market.tscn" id="8_ce2pi"]
+[ext_resource type="PackedScene" uid="uid://brfw4po7q85yl" path="res://aysa.tscn" id="9_btgd2"]
+[ext_resource type="PackedScene" uid="uid://by5lqfbrkduik" path="res://wires.tscn" id="10_lj1po"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tq83q"]
-texture = ExtResource("2_jr4sj")
+texture = ExtResource("2_u57om")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
@@ -23,7 +23,7 @@ texture_region_size = Vector2i(128, 128)
 7:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fnew8"]
-texture = ExtResource("5_frh7r")
+texture = ExtResource("3_lbqoj")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
@@ -38,7 +38,7 @@ sources/0 = SubResource("TileSetAtlasSource_tq83q")
 sources/1 = SubResource("TileSetAtlasSource_fnew8")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bhugm"]
-texture = ExtResource("2_jr4sj")
+texture = ExtResource("2_u57om")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
@@ -55,7 +55,7 @@ tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_bhugm")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ruek6"]
-texture = ExtResource("5_frh7r")
+texture = ExtResource("3_lbqoj")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
@@ -69,7 +69,7 @@ texture_region_size = Vector2i(128, 128)
 5:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dom35"]
-texture = ExtResource("5_frh7r")
+texture = ExtResource("3_lbqoj")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
@@ -109,7 +109,7 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ac5et"]
-texture = ExtResource("2_jr4sj")
+texture = ExtResource("2_u57om")
 margins = Vector2i(1, 1)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(128, 128)
@@ -122,13 +122,13 @@ tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_ac5et")
 
 [node name="Node" type="Node"]
-script = ExtResource("1_i4noh")
+script = ExtResource("1_lmlsb")
 
 [node name="Grid" type="TileMapLayer" parent="."]
 z_index = 1
 z_as_relative = false
 tile_set = SubResource("TileSet_p05qu")
-script = ExtResource("3_rs8bf")
+script = ExtResource("4_0d6mm")
 debug = true
 
 [node name="PipesGrid" type="TileMapLayer" parent="."]
@@ -139,31 +139,31 @@ tile_set = SubResource("TileSet_dpf0q")
 [node name="HumidityTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
-script = ExtResource("5_o1msm")
+script = ExtResource("5_hmt5n")
 
 [node name="PlantsGrid" type="TileMapLayer" parent="."]
 z_index = 2
 z_as_relative = false
 tile_set = SubResource("TileSet_k0gil")
-script = ExtResource("6_u4k5j")
+script = ExtResource("6_lrusm")
 
-[node name="Player" parent="." instance=ExtResource("2_57hw3")]
+[node name="Player" parent="." instance=ExtResource("7_ji4ki")]
 z_index = 3
 position = Vector2(576, 320)
 money = 1500
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Market" parent="." instance=ExtResource("7_c74gr")]
+[node name="Market" parent="." instance=ExtResource("8_ce2pi")]
 position = Vector2(-206, -73)
 
 [node name="ToDo" type="Node" parent="."]
 script = SubResource("GDScript_weabf")
 
-[node name="Area2D" parent="." instance=ExtResource("10_mhnw1")]
+[node name="Area2D" parent="." instance=ExtResource("9_btgd2")]
 z_index = 2
 
-[node name="WireLayer" parent="." instance=ExtResource("11_e7ngf")]
+[node name="WireLayer" parent="." instance=ExtResource("10_lj1po")]
 z_index = 2
 position = Vector2(-1, -3)
 
