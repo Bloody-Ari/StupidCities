@@ -26,9 +26,10 @@ func use(pos: Vector2, game_grid: GameGrid):
 	else:
 		print("Please collect more seeds")
 
-func _init(_name, _descriptcion, _texture, _level, _quantity):
+func _init(_name, _descriptcion, _texture, _level, _quantity, _price):
 	name = _name
 	description = _descriptcion
 	texture = _texture
 	level = _level
 	quantity = _quantity
+	price = _price

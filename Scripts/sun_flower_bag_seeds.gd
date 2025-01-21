@@ -11,9 +11,10 @@ func use(pos: Vector2, game_grid: GameGrid):
 		game_grid.grid[pos].onChangedCell.emit(pos)
 		game_grid.ChangedSeedAmount.emit(seeds_available)
 
-func _init(_name, _descriptcion, _texture, _level, _quantity):
+func _init(_name, _descriptcion, _texture, _level, _quantity, _price):
 	name = _name
 	description = _descriptcion
 	texture = _texture
 	level = _level
 	seeds_available = _quantity
+	price = _price

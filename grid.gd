@@ -6,6 +6,11 @@ extends TileMapLayer
 @export var cell_size: int = 128
 @export var debug: bool = false;
 
+var seeds_display = Label.new()
+var seeds = Label.new()
+var monero_display = Label.new()
+var monero = Label.new()
+
 var cells_with_machines = []
 signal ChangedMachineAmmount()
 
@@ -24,6 +29,10 @@ var pipes_timer = Timer.new()
 var humidity_network = []
 
 signal onCell(pos)
+signal ChangedSeedAmount(new_value: int)
+signal PickedUpSeeds(ammount: int)
+signal ChangeMoneroAmount(new_value)
+signal UsingCell(pos: Vector2)
 
 func remove_pipe(pos):
 	#print("About to remove pipe with locked state: ", pipe_lock)
@@ -36,8 +45,13 @@ func remove_pipe(pos):
 			grid[pos].valve_state = null
 			pipes_grid.erase(pos)
 			#print(pipes_grid)
+			
 			updateCellTile(pos)
 			pipe_lock = false
+	if grid[pos].humidity_checker_type != null:
+		grid[pos].humidity_checker_type = null
+		grid[pos].humidity_checker = null
+		updateCellTile(pos)
 
 func _onCell(pos):
 	var position = Vector2(local_to_map(to_local(pos)).x, local_to_map(to_local(pos)).y)
@@ -48,7 +62,8 @@ func _onCell(pos):
 			timer.start(2)
 			grid[position].machine.progress_bar.visible = true
 			timer.timeout.connect(func():
-				grid[position].machine.progress_bar.visible = false
+				if grid[position].machine != null:
+					grid[position].machine.progress_bar.visible = false
 			)
 	if grid[position].pipe_state != null:
 		var timer = Timer.new()
@@ -140,10 +155,6 @@ func _onPipesTimer():
 	#print("Releasing pipe")
 	pipe_lock = false
 
-signal ChangedSeedAmount(new_value: int)
-signal PickedUpSeeds(ammount: int)
-signal ChangeMoneroAmount(new_value)
-signal UsingCell(pos: Vector2)
 
 func onUsingCell(pos: Vector2):
 	var position = local_to_map(to_local(pos))
@@ -154,10 +165,10 @@ func onUsingCell(pos: Vector2):
 		grid[Vector2(position.x, position.y)].valve_state = !grid[Vector2(position.x, position.y)].valve_state 
 		_onCellUpdate(position)
 	if player.left_click_tool != null:
-		if player.left_click_tool.name == "Check" or "humidity_checker3remote":
+		if player.left_click_tool.name == "Check" or player.left_click_tool.name == "humidity_checker3remote" or debug:
 			player.left_click_tool.use(position, self)
 	if player.right_click_tool != null:
-		if player.right_click_tool.name == "Check" or "humidity_checker3remoteS":
+		if player.right_click_tool.name == "Check" or player.right_click_tool.name == "humidity_checker3remote" or debug:
 			player.right_click_tool.use(position, self)
 
 func _onPickedUpSeeds(ammount: int):
@@ -176,11 +187,6 @@ func _onChangedSeedAmount(new_value: int):
 
 func _onChangedMoneroAmount(new_value):
 	self.monero_display.text = str(new_value)
-
-var seeds_display = Label.new()
-var seeds = Label.new()
-var monero_display = Label.new()
-var monero = Label.new()
 
 func _ready() -> void:
 	seeds.text = str("Seeds in your inventory: ")
@@ -351,6 +357,8 @@ func updateCellTile(pos:Vector2):
 				new_humidity_checker_tile = Vector2(0, 3)
 			3:
 				new_humidity_checker_tile = Vector2(9, 2)
+	else:
+		new_humidity_checker_tile = Vector2(5, 0)
 
 	if pos == Vector2(0,0):
 		new_pipe_tile = Vector2(3,2)
@@ -367,10 +375,10 @@ func updateCellTile(pos:Vector2):
 
 	if(new_tile > Vector2(-1, -1)):
 		set_cell(pos, 0, new_tile)
-	if(new_plant_tile > Vector2(-1, -1)):
-		plants_grid.set_cell(pos, 2, new_plant_tile)
 	if(new_machine_tile > Vector2(-1, -1)):
 		plants_grid.set_cell(pos, 1, new_machine_tile)
+	if(new_plant_tile > Vector2(-1, -1)):
+		plants_grid.set_cell(pos, 2, new_plant_tile)
 	if(new_pipe_tile > Vector2(-1, -1)):
 		pipes_texture_grid.set_cell(pos, 0, new_pipe_tile)
 	if(new_humidity_checker_tile > Vector2(-1,-1)):

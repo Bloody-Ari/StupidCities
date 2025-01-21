@@ -48,7 +48,6 @@ func _onSelectedFromBuyBar(item_index):
 					player.bucket_level_label.text = "Bucket water level: 00"
 					player.bucket_level_label.position = Vector2(-560, -290)
 					buying_bar.remove_item(item_index)
-					print("Buying bucket")
 		else:
 			print("Not enough money")
 	buying_bar.deselect_all()
@@ -80,7 +79,7 @@ func _ready() -> void:
 	self.area_shape_entered.connect(_onMarketEnter)
 	self.area_shape_exited.connect(_onMarketExit)
 
-	buying_bar.add_item("10   -Empty Plastic Bag", preload("res://art/EmptyPlasticBag.png"), true)
+	buying_bar.add_item("15   -Empty Plastic Bag", preload("res://art/EmptyPlasticBag.png"), true)
 	buying_bar.add_item("50   -sprinkler_mk2", preload("res://art/Sprinkler2.png"), true)
 	buying_bar.add_item("50   -better_gloves", preload("res://art/Gloves2.png"), true)
 	buying_bar.add_item("50   -better_hoe", preload("res://art/Hoe2.png"), true)

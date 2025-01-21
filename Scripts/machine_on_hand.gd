@@ -3,28 +3,35 @@ class_name MachineOnHand
 
 var name
 var texture
+var price
 
 func _init(_name):
 	name = _name
 	match name:
 		"aspersor_basico":
 			texture = preload("res://art/Machines/AutoWaterer1.png")
+			price = 150
 		"water_tank":
 			texture = preload("res://art/Machines/WaterTank.png")
+			price = 100
 		"pipe":
 			texture = preload("res://art/Pipe.png")
+			price = 10
 		"valve":
 			texture = preload("res://art/OpenPipeValve.png")
+			price = 20
 		"aspersor_a_presion":
 			texture = preload("res://art/Machines/AutoWaterer2.png")
+			price = 250
 		"humidity_checker1":
 			texture = preload("res://art/Waterer1Icon.png")
+			price = 100
 		"humidity_checker3":
 			texture = preload("res://art/Waterer3Icon.png")
+			price = 200
 
 func use(pos: Vector2, game_grid: GameGrid):
 	var player = game_grid.get_node("../Player")
-	print("placing: ", name, " in position: ", pos)
 	match name:
 		"humidity_checker1":
 			game_grid.grid[pos].humidity_checker_type = 1
@@ -82,7 +89,6 @@ func use(pos: Vector2, game_grid: GameGrid):
 			game_grid.grid[pos].pipe_label.position = Vector2(pos.x*128, pos.y*128)
 			game_grid.add_child(game_grid.grid[pos].pipe_label)
 			game_grid.pipes_grid.append(pos)
-			print("New pipes grid: ", game_grid.pipes_grid)
 			game_grid.pipes_grid.sort()
 		"valve":
 			game_grid.grid[pos].pipe_state = 0
