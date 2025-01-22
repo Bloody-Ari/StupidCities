@@ -8,6 +8,7 @@ extends Area2D
 @onready var right_hotbar = $"Hotbars/Right Hotbar"
 @onready var camera = $Camera2D
 @onready var hotbars = $Hotbars
+@onready var pause_menu = $PauseMenu2/PauseMenu
 var right_hotbar_contents: Array = []
 var left_hotbar_contents: Array = []
 @export var money = 100
@@ -34,10 +35,49 @@ var use_progress_bar = ProgressBar.new()
 
 var right_press = 0
 var left_press = 0
+var right_bar_full = false
+var left_bar_full = false
+var inventory_lock = false
+@onready var inventory_full_dialog = $ColorRect
 
 signal using(cell: Vector2, tool: String, hand: String)
 signal longPressRight(game_grid)
 signal longPressLeft(game_grid)
+
+var showing_inventory_full_dialog = false
+
+func onInventoryFull():
+	if showing_inventory_full_dialog:
+		return
+	showing_inventory_full_dialog = true
+	inventory_full_dialog.visible = true
+	print("Your inventory is full")
+	var timer = Timer.new()
+	add_child(timer)
+	timer.start(2)
+	timer.timeout.connect(func():
+		inventory_full_dialog.visible = false
+		showing_inventory_full_dialog = false
+	)
+
+func check_if_hotbar_is_full():
+	if left_hotbar_contents.count(null) == 0:
+		left_bar_full = true
+	else:
+		left_bar_full = false
+	if right_hotbar_contents.count(null) == 0:
+		right_bar_full = true
+	else:
+		right_bar_full = false
+	if right_bar_full && left_bar_full:
+		inventory_lock = true
+	else:
+		inventory_lock = false
+
+func toggle_menu():
+	print("Toggling pause menu")
+	pause_menu.visible = !pause_menu.visible
+	get_tree().paused = !get_tree().paused
 
 func _adjust_hotbars(): 
 	# get items, if item is sunflowerbag or plastic bags adjust text
@@ -62,10 +102,11 @@ func _adjust_hotbars():
 		if(item.name == "Empty Plastic Bag" or item.name == "Sunflower Seeds Bag"):
 			#left_hotbar.position
 			bag_text = right_hotbar.get_child(0)
-			right_hotbar.set_item_text(index, str(index))
+			right_hotbar.set_item_text(index, str(index%10))
 			if bag_text != null:
 				bag_text.set_position(Vector2(64*(index+1), 0))
 		index += 1
+	check_if_hotbar_is_full()
 
 func print_inventory():
 	print("Inventory:")
@@ -118,12 +159,12 @@ func remove_n_from_inventory(item, n):
 		i=0
 		for _item in right_hotbar_contents:
 			if _item != null:
-				right_hotbar.set_item_text(i, str(i+1))
+				right_hotbar.set_item_text(i, str((i+1)%10))
 				i+=1
 		i=0
 		for _item in left_hotbar_contents:
 			if _item != null:
-				left_hotbar.set_item_text(i, str(i+1))
+				left_hotbar.set_item_text(i, str((i+1)%10))
 				i+=1
 	if left_click_tool == item:
 		left_click_tool = null
@@ -165,12 +206,12 @@ func remove_from_inventory(item):
 	i=0
 	for _item in left_hotbar_contents:
 		if _item != null:
-			left_hotbar.set_item_text(i, str(i+1))
+			left_hotbar.set_item_text(i, str((i+1)%10))
 			i+=1
 	i=0
 	for _item in right_hotbar_contents:
 		if _item != null:
-			right_hotbar.set_item_text(i, str(i+1))
+			right_hotbar.set_item_text(i, str((i+1)%10))
 			i+=1
 	if left_click_tool == item:
 		left_click_tool = null
@@ -183,18 +224,20 @@ func remove_from_inventory(item):
 func append_to_inventory(item):
 	inventory.append(item)
 	if right_hotbar_contents.count(null) > left_hotbar_contents.count(null):
-		right_hotbar_contents[9-right_hotbar_contents.count(null)] = item
-		right_hotbar.add_item(str(9-right_hotbar_contents.count(null)), item.texture, true)
+		right_hotbar_contents[10-right_hotbar_contents.count(null)] = item
+		right_hotbar.add_item(str(10-right_hotbar_contents.count(null)), item.texture, true)
+		check_if_hotbar_is_full()
 	else:
-		left_hotbar_contents[9-left_hotbar_contents.count(null)] = item
-		left_hotbar.add_item(str(9-left_hotbar_contents.count(null)), item.texture, true)
+		left_hotbar_contents[10-left_hotbar_contents.count(null)] = item
+		left_hotbar.add_item(str(10-left_hotbar_contents.count(null)), item.texture, true)
+		check_if_hotbar_is_full()
 	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$CollisionShape2D.disabled = false
-	right_hotbar_contents.resize(9)
-	left_hotbar_contents.resize(9)
+	right_hotbar_contents.resize(10)
+	left_hotbar_contents.resize(10)
 	#print_inventory()
 	right_hotbar_contents[0] = inventory[0]
 	right_hotbar.add_item("1", preload("res://art/Hoe.png"), true)
@@ -230,6 +273,7 @@ func _ready() -> void:
 	hotbars.add_child(use_progress_bar)
 	humidity_label.visible = true
 	add_child(humidity_label)
+
 #you have 2 different sets of hotbars, one for right click, 1-0 
 #and one for left click shift 1-0
 func _input(event: InputEvent) -> void:
@@ -247,7 +291,7 @@ func update_tools():
 		print("Left click tool: ", left_click_tool.name)
 
 func _onLongPressRight(press):
-	if press >= 2:
+	if press >= 1.5:
 		if right_click_tool == null:
 			game_grid.remove_pipe(Vector2(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position()))))
 		else:
@@ -256,7 +300,7 @@ func _onLongPressRight(press):
 		right_press = 0
 
 func _onLongPressLeft(press):
-	if press >= 2:
+	if press >= 1.5:
 		if left_click_tool == null:
 			game_grid.remove_pipe(Vector2(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position()))))
 		else:
@@ -324,6 +368,15 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("select_left_hotbar_six") and !Input.is_action_just_pressed("select_right_hotbar_six"):
 		SelectFromLeftHotbar(5)
+	
+	if Input.is_action_just_pressed("select_left_hotbar_seven") and !Input.is_action_just_pressed("select_right_hotbar_seven"):
+		SelectFromLeftHotbar(6)
+	if Input.is_action_just_pressed("select_left_hotbar_eight") and !Input.is_action_just_pressed("select_right_hotbar_eight"):
+		SelectFromLeftHotbar(7)
+	if Input.is_action_just_pressed("select_left_hotbar_sevennine") and !Input.is_action_just_pressed("select_right_hotbar_nine"):
+		SelectFromLeftHotbar(8)
+	if Input.is_action_just_pressed("select_left_hotbar_ten") and !Input.is_action_just_pressed("select_right_hotbar_ten"):
+		SelectFromLeftHotbar(9)
 		
 	if Input.is_action_just_pressed("select_right_hotbar_one"):
 		SelectFromRightHotbar(0)
@@ -341,6 +394,14 @@ func _process(delta: float) -> void:
 		SelectFromRightHotbar(4)
 	if Input.is_action_just_pressed("select_right_hotbar_six"):
 		SelectFromRightHotbar(5)
+	if Input.is_action_just_pressed("select_right_hotbar_seven"):
+		SelectFromRightHotbar(6)
+	if Input.is_action_just_pressed("select_right_hotbar_eight"):
+		SelectFromRightHotbar(7)
+	if Input.is_action_just_pressed("select_right_hotbar_nine"):
+		SelectFromRightHotbar(8)
+	if Input.is_action_just_pressed("select_right_hotbar_ten"):
+		SelectFromRightHotbar(9)
 
 	if Input.is_action_just_pressed("Open Inventory"):
 		#_toggle_inventory()
@@ -387,6 +448,9 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Place Wire"):
 		#print(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())))
 		wire_layer.add_cell(game_grid.local_to_map(game_grid.to_local(game_grid.get_global_mouse_position())))
+		
+	if Input.is_action_just_pressed("OpenMenu"):
+		toggle_menu()
 
 func _on_right_hotbar_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	if right_click_tool == right_hotbar_contents[index]:

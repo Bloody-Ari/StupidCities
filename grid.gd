@@ -166,10 +166,10 @@ func onUsingCell(pos: Vector2):
 		grid[Vector2(position.x, position.y)].valve_state = !grid[Vector2(position.x, position.y)].valve_state 
 		_onCellUpdate(position)
 	if player.left_click_tool != null:
-		if player.left_click_tool.name == "Check" or player.left_click_tool.name == "humidity_checker3remote" or debug:
+		if player.left_click_tool.name == "Check" or player.left_click_tool.name == "Screen" or debug:
 			player.left_click_tool.use(position, self)
 	if player.right_click_tool != null:
-		if player.right_click_tool.name == "Check" or player.right_click_tool.name == "humidity_checker3remote" or debug:
+		if player.right_click_tool.name == "Check" or player.right_click_tool.name == "Screen" or debug:
 			player.right_click_tool.use(position, self)
 
 func _onPickedUpSeeds(ammount: int):

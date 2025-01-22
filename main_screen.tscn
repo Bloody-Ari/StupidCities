@@ -1,28 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4kax0nuednhg"]
+[gd_scene load_steps=5 format=3 uid="uid://c4kax0nuednhg"]
 
+[ext_resource type="Script" path="res://main_screen.gd" id="1_hck56"]
 [ext_resource type="Texture2D" uid="uid://dxutl2f4qcslv" path="res://art/MainScreenBackrgound.png" id="1_trfg3"]
 [ext_resource type="FontFile" uid="uid://b66djal1k4bxf" path="res://art/FiraCodeNerdFont-Medium.ttf" id="2_wh67c"]
+[ext_resource type="Script" path="res://toggle_full_screen.gd" id="4_odvhr"]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_hck56")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(960, 541)
 texture = ExtResource("1_trfg3")
 
-[node name="Button2" type="Button" parent="."]
+[node name="FreePlayButton" type="Button" parent="."]
 offset_left = 584.0
-offset_top = 693.0
+offset_top = 600.0
 offset_right = 1284.0
-offset_bottom = 865.0
+offset_bottom = 772.0
 theme_override_fonts/font = ExtResource("2_wh67c")
 theme_override_font_sizes/font_size = 116
 text = "Free Play"
 
-[node name="Button" type="Button" parent="."]
+[node name="TutorialButton" type="Button" parent="."]
 offset_left = 584.0
-offset_top = 423.0
+offset_top = 800.0
 offset_right = 1284.0
-offset_bottom = 595.0
+offset_bottom = 972.0
 theme_override_fonts/font = ExtResource("2_wh67c")
 theme_override_font_sizes/font_size = 115
 text = "Tutorial"
+
+[node name="ToggleFullScreen" type="CheckButton" parent="."]
+offset_left = 584.0
+offset_top = 386.0
+offset_right = 1284.0
+offset_bottom = 553.0
+theme_override_fonts/font = ExtResource("2_wh67c")
+theme_override_font_sizes/font_size = 100
+text = "FullScreen"
+script = ExtResource("4_odvhr")
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 10.0
+offset_top = 965.0
+offset_right = 263.0
+offset_bottom = 1070.0
+theme_override_fonts/font = ExtResource("2_wh67c")
+theme_override_font_sizes/font_size = 64
+text = "EXIT"

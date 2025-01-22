@@ -6,19 +6,21 @@ extends Area2D
 @onready var shape = $CollisionShape2D 
 @onready var grid = $"../Grid"
 @onready var button = $"Button"
-
+signal inventoryFull()
 func _onSellRightClick():
-	if player.right_click_tool != null:
-		player.money += int(70 * player.right_click_tool.price / 100)
-		player.remove_n_from_inventory(player.right_click_tool, 1)
-		grid.ChangeMoneroAmount.emit(player.money)
+	if player.right_click_tool != null:	
+		if player.right_click_tool.name != "Empty Plastic Bag" and player.right_click_tool.name != "Sunflower Seeds Bag":
+			player.money += int(70 * player.right_click_tool.price / 100)
+			player.remove_n_from_inventory(player.right_click_tool, 1)
+			grid.ChangeMoneroAmount.emit(player.money)
 	button.release_focus()
 
 func _onSellLeftClick():
 	if player.left_click_tool != null:
-		player.money += int(70 * player.left_click_tool.price / 100)
-		player.remove_n_from_inventory(player.left_click_tool, 1)
-		grid.ChangeMoneroAmount.emit(player.money)
+		if player.left_click_tool.name != "Empty Plastic Bag" and player.right_click_tool.name != "Sunflower Seeds Bag":
+			player.money += int(70 * player.left_click_tool.price / 100)
+			player.remove_n_from_inventory(player.left_click_tool, 1)
+			grid.ChangeMoneroAmount.emit(player.money)
 	button.release_focus()
 
 func _onMarketEnter(area_rid, area, area_shape_index, local_shape_index):
@@ -32,6 +34,11 @@ func _onMarketExit(area_rid, area, area_shape_index, local_shape_index):
 	button.visible = false
 
 func _onSelectedFromBuyBar(item_index):
+	if player.inventory_lock:
+		inventoryFull.emit()
+		buying_bar.deselect_all()
+		buying_bar.release_focus()
+		return
 	var regex = RegEx.new()
 	regex.compile("[0-9]*")
 	var result = regex.search(buying_bar.get_item_text(item_index))
@@ -51,9 +58,15 @@ func _onSelectedFromBuyBar(item_index):
 		else:
 			print("Not enough money")
 	buying_bar.deselect_all()
+	buying_bar.release_focus()
 
 
 func _onSelectedFromMachineBuyBar(item_index):
+	if player.inventory_lock:
+		inventoryFull.emit()
+		machine_buy_bar.deselect_all()
+		machine_buy_bar.release_focus()
+		return
 	var regex = RegEx.new()
 	regex.compile("[0-9]*")
 	var result = regex.search(machine_buy_bar.get_item_text(item_index))
@@ -63,8 +76,10 @@ func _onSelectedFromMachineBuyBar(item_index):
 			grid.ChangeMoneroAmount.emit(player.money)
 			#buying_bar.get_item_text(item_index).split("-")[1]]
 			player.append_to_inventory(MachineOnHand.new(machine_buy_bar.get_item_text(item_index).split("-")[1]))
+			
 						# place it on your inventory now...
 	machine_buy_bar.deselect_all()
+	machine_buy_bar.release_focus()
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

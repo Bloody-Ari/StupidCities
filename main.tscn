@@ -129,7 +129,6 @@ z_index = 1
 z_as_relative = false
 tile_set = SubResource("TileSet_p05qu")
 script = ExtResource("3_rs8bf")
-debug = true
 
 [node name="PipesGrid" type="TileMapLayer" parent="."]
 z_index = 3
@@ -150,7 +149,7 @@ script = ExtResource("6_u4k5j")
 [node name="Player" parent="." instance=ExtResource("2_57hw3")]
 z_index = 3
 position = Vector2(576, 320)
-money = 1500
+money = 10
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -172,3 +171,4 @@ z_index = 2
 tile_set = SubResource("TileSet_a1w5u")
 
 [connection signal="timeout" from="HumidityTimer" to="Grid" method="_onHumidityTimer"]
+[connection signal="inventoryFull" from="Market" to="Player" method="onInventoryFull"]

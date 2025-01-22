@@ -152,6 +152,22 @@ z_index = 3
 position = Vector2(576, 320)
 money = 1500
 
+[node name="ColorRect2" type="ColorRect" parent="Player"]
+z_index = 4
+offset_left = -412.0
+offset_top = -268.0
+offset_right = 446.0
+offset_bottom = 224.0
+color = Color(0.345098, 0.317647, 0.556863, 0.909804)
+
+[node name="Label" type="Label" parent="Player/ColorRect2"]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 11.0
+offset_right = 682.0
+offset_bottom = 110.0
+text = "Bienvenido al tutorial de StupidCities!"
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Market" parent="." instance=ExtResource("8_ce2pi")]
@@ -171,4 +187,7 @@ position = Vector2(-1, -3)
 z_index = 2
 tile_set = SubResource("TileSet_a1w5u")
 
+[node name="TutorialScript" type="Node" parent="."]
+
 [connection signal="timeout" from="HumidityTimer" to="Grid" method="_onHumidityTimer"]
+[connection signal="inventoryFull" from="Market" to="Player" method="onInventoryFull"]

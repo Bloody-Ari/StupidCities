@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bs8fj4wgjsj5v"]
+[gd_scene load_steps=7 format=3 uid="uid://bs8fj4wgjsj5v"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_00fnx"]
 [ext_resource type="Texture2D" uid="uid://0uy58euwhv4r" path="res://art/FemCharacter.png" id="1_sxggs"]
+[ext_resource type="FontFile" uid="uid://b66djal1k4bxf" path="res://art/FiraCodeNerdFont-Medium.ttf" id="3_f07dr"]
+[ext_resource type="Script" path="res://pause_menu.gd" id="4_rbp0y"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lwnt5"]
 animations = [{
@@ -46,14 +48,15 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -926.0
 offset_top = 426.0
-offset_right = -158.0
+offset_right = -106.0
 offset_bottom = 504.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2
 mouse_filter = 1
-max_columns = 10
+max_columns = 11
 same_column_width = true
+fixed_column_width = 75
 icon_scale = 0.5
 fixed_icon_size = Vector2i(128, 128)
 
@@ -65,19 +68,110 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 156.0
+offset_left = 89.0
 offset_top = 426.0
-offset_right = 924.0
+offset_right = 909.0
 offset_bottom = 504.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2
 mouse_filter = 1
 auto_height = true
-max_columns = 10
+max_columns = 11
+fixed_column_width = 75
 icon_scale = 0.5
+fixed_icon_size = Vector2i(128, 128)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+z_index = 5
+offset_left = -136.0
+offset_top = -162.0
+offset_right = 145.0
+offset_bottom = -103.0
+color = Color(0.345098, 0.317647, 0.556863, 1)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 18.0
+offset_right = 364.0
+offset_bottom = 77.0
+theme_override_fonts/font = ExtResource("3_f07dr")
+theme_override_font_sizes/font_size = 18
+text = "Tu inventario esta lleno"
+
+[node name="PauseMenu2" type="CanvasLayer" parent="."]
+process_mode = 2
+layer = 5
+
+[node name="PauseMenu" type="ColorRect" parent="PauseMenu2"]
+process_mode = 2
+visible = false
+z_index = 6
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -228.5
+offset_top = -283.5
+offset_right = 240.5
+offset_bottom = 203.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.345098, 0.317647, 0.556863, 0.823529)
+script = ExtResource("4_rbp0y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu2/PauseMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -221.0
+offset_top = -387.0
+offset_right = 221.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="BackToGameButton" type="Button" parent="PauseMenu2/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Back to Game"
+
+[node name="FullScreenButton" type="CheckButton" parent="PauseMenu2/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_f07dr")
+theme_override_font_sizes/font_size = 64
+text = "FullScreen"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenu2/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_f07dr")
+theme_override_font_sizes/font_size = 64
+text = "Main Menu"
+
+[node name="QuitButton" type="Button" parent="PauseMenu2/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_f07dr")
+theme_override_font_sizes/font_size = 64
+text = "Close Game"
+
+[node name="Label" type="Label" parent="PauseMenu2/PauseMenu"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 9.0
+offset_right = 464.0
+offset_bottom = 108.0
+theme_override_fonts/font = ExtResource("3_f07dr")
+theme_override_font_sizes/font_size = 72
+text = "Pause Menu"
 
 [connection signal="item_clicked" from="Hotbars/Left Hotbar" to="." method="_on_left_hotbar_item_clicked"]
 [connection signal="item_clicked" from="Hotbars/Right Hotbar" to="." method="_on_right_hotbar_item_clicked"]

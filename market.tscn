@@ -25,6 +25,7 @@ scale = Vector2(1.62963, 1.66667)
 texture = ExtResource("1_wttsx")
 
 [node name="Buying Bar" type="ItemList" parent="."]
+process_mode = 1
 z_index = 4
 z_as_relative = false
 anchors_preset = 8
@@ -39,6 +40,7 @@ offset_bottom = 356.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2
+mouse_filter = 1
 auto_height = true
 text_overrun_behavior = 0
 max_columns = 10
@@ -47,6 +49,7 @@ icon_mode = 0
 icon_scale = 0.5
 
 [node name="MachineBuy" type="ItemList" parent="."]
+process_mode = 1
 z_index = 4
 z_as_relative = false
 anchors_preset = 8
@@ -62,6 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.443872, 2.60438)
 size_flags_horizontal = 2
+mouse_filter = 1
 auto_height = true
 text_overrun_behavior = 0
 max_columns = 10
