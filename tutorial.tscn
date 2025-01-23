@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://0rna3yiv5fb4"]
+[gd_scene load_steps=44 format=3 uid="uid://0rna3yiv5fb4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_lmlsb"]
 [ext_resource type="Texture2D" uid="uid://dj4espi5u34ay" path="res://art/FirstTileSet.png" id="2_u57om"]
@@ -10,6 +10,28 @@
 [ext_resource type="PackedScene" uid="uid://byk58n8fk0m03" path="res://market.tscn" id="8_ce2pi"]
 [ext_resource type="PackedScene" uid="uid://brfw4po7q85yl" path="res://aysa.tscn" id="9_btgd2"]
 [ext_resource type="PackedScene" uid="uid://by5lqfbrkduik" path="res://wires.tscn" id="10_lj1po"]
+[ext_resource type="Script" path="res://tutorial_script.gd" id="11_3l27s"]
+[ext_resource type="Texture2D" uid="uid://cr2ep0as3u1p" path="res://art/PlainTerrain.png" id="12_f608m"]
+[ext_resource type="Texture2D" uid="uid://64fowexp5cis" path="res://art/Gloves.png" id="13_dtws5"]
+[ext_resource type="Texture2D" uid="uid://bro2ec6xrplko" path="res://art/PlainDirt.png" id="14_52tdl"]
+[ext_resource type="Texture2D" uid="uid://d01qdstlfq8mw" path="res://art/Hoe.png" id="15_87qq4"]
+[ext_resource type="Texture2D" uid="uid://dx75mcixh1egh" path="res://art/WetPlawedDirt.png" id="16_ug3c2"]
+[ext_resource type="Texture2D" uid="uid://bf6amyba1843k" path="res://art/PlainWetDirt.png" id="17_axu8x"]
+[ext_resource type="Texture2D" uid="uid://8kiuo8t4qnxq" path="res://art/SunFlowerSeedsBagItem.png" id="18_qbq0a"]
+[ext_resource type="Texture2D" uid="uid://cipt3v8nj3qnj" path="res://art/Sprinkler.png" id="19_ucd6c"]
+[ext_resource type="Texture2D" uid="uid://bbdq070ct1w4a" path="res://art/PlantedSunFlowers.png" id="20_vs47q"]
+[ext_resource type="Texture2D" uid="uid://bxumb4eet145o" path="res://art/SecondGrowSunFlowers.png" id="21_vnu5o"]
+[ext_resource type="Texture2D" uid="uid://lkempy7oc8ht" path="res://art/FullGrowSunFlowers.png" id="22_1nu7h"]
+[ext_resource type="Texture2D" uid="uid://dihb6gq8q5r34" path="res://art/Aysa.png" id="23_27qhr"]
+[ext_resource type="Texture2D" uid="uid://cy6edcs8cuj1t" path="res://art/Cemento.png" id="24_25x6u"]
+[ext_resource type="Texture2D" uid="uid://lf7qo2hxurtn" path="res://art/Machines/WaterTank.png" id="25_3jmy8"]
+[ext_resource type="Texture2D" uid="uid://belsnl8ag2jvj" path="res://art/OpenPipeValve.png" id="26_vbley"]
+[ext_resource type="Texture2D" uid="uid://dl3tkxbo5skg0" path="res://art/Pipe.png" id="27_5856y"]
+[ext_resource type="Texture2D" uid="uid://cl1g87mpu2t3t" path="res://art/Machines/AutoWaterer2.png" id="28_ytk5u"]
+[ext_resource type="Texture2D" uid="uid://7ktkdt6l1swt" path="res://art/Waterer1Icon.png" id="29_7y5bf"]
+[ext_resource type="Texture2D" uid="uid://bngy1m7x57413" path="res://art/Waterer2.png" id="30_ejb66"]
+[ext_resource type="Texture2D" uid="uid://d78rw71amfvk" path="res://art/Waterer3Icon.png" id="31_xcblm"]
+[ext_resource type="Texture2D" uid="uid://d1hdkgho1iuk5" path="res://art/Waterer3Remote.png" id="32_v6auu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tq83q"]
 texture = ExtResource("2_u57om")
@@ -150,24 +172,7 @@ script = ExtResource("6_lrusm")
 [node name="Player" parent="." instance=ExtResource("7_ji4ki")]
 z_index = 3
 position = Vector2(576, 320)
-money = 1500
-
-[node name="ColorRect2" type="ColorRect" parent="Player"]
-visible = false
-z_index = 4
-offset_left = -412.0
-offset_top = -268.0
-offset_right = 446.0
-offset_bottom = 224.0
-color = Color(0.345098, 0.317647, 0.556863, 0.909804)
-
-[node name="Label" type="Label" parent="Player/ColorRect2"]
-layout_mode = 0
-offset_left = 202.0
-offset_top = 11.0
-offset_right = 682.0
-offset_bottom = 110.0
-text = "Bienvenido al tutorial de StupidCities!"
+money = 9999999999
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -189,6 +194,202 @@ z_index = 2
 tile_set = SubResource("TileSet_a1w5u")
 
 [node name="TutorialScript" type="Node" parent="."]
+script = ExtResource("11_3l27s")
+
+[node name="Background" type="ColorRect" parent="TutorialScript"]
+z_index = 5
+offset_top = -3.0
+offset_right = 780.0
+offset_bottom = 369.0
+color = Color(0.345098, 0.317647, 0.556863, 0.823529)
+
+[node name="Title" type="Label" parent="TutorialScript/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -127.0
+offset_right = 128.0
+offset_bottom = 30.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Welcome to Stupid Cities!"
+
+[node name="Text" type="Label" parent="TutorialScript/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -381.0
+offset_top = -129.5
+offset_right = 378.0
+offset_bottom = 158.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Este es un juego inspirado en el género de logística centrado en una granja,
+la recolección y proceso del garano!
+
+Actualmente es una demo mas similar a una prueba de concepto, pero con algunas  mecánicas 
+ya implementadas como el flujo de agua!"
+
+[node name="OkButton" type="Button" parent="TutorialScript/Background"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 258.0
+offset_top = -49.0
+offset_right = 374.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Ok"
+
+[node name="PreparacionDeLaTierra" type="CanvasGroup" parent="TutorialScript/Background"]
+visible = false
+
+[node name="PlainTerrain" type="Sprite2D" parent="TutorialScript/Background/PreparacionDeLaTierra"]
+position = Vector2(151, 253)
+texture = ExtResource("12_f608m")
+
+[node name="Gloves" type="Sprite2D" parent="TutorialScript/Background/PreparacionDeLaTierra"]
+position = Vector2(96, 265)
+texture = ExtResource("13_dtws5")
+
+[node name="PlainDirt" type="Sprite2D" parent="TutorialScript/Background/PreparacionDeLaTierra"]
+position = Vector2(397, 253)
+texture = ExtResource("14_52tdl")
+
+[node name="PlainDirt2" type="Sprite2D" parent="TutorialScript/Background/PreparacionDeLaTierra"]
+position = Vector2(629, 253)
+texture = ExtResource("14_52tdl")
+
+[node name="Hoe" type="Sprite2D" parent="TutorialScript/Background/PreparacionDeLaTierra"]
+position = Vector2(353, 261)
+texture = ExtResource("15_87qq4")
+
+[node name="WetPlawedDirt" type="Sprite2D" parent="TutorialScript/Background/PreparacionDeLaTierra"]
+position = Vector2(630, 253)
+texture = ExtResource("16_ug3c2")
+
+[node name="PlantadoRegado" type="CanvasGroup" parent="TutorialScript/Background"]
+visible = false
+
+[node name="PlainWetDirt" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(297, 252)
+texture = ExtResource("17_axu8x")
+
+[node name="PlainWetDirt4" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(119, 252)
+texture = ExtResource("17_axu8x")
+
+[node name="PlainWetDirt2" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(474, 252)
+texture = ExtResource("17_axu8x")
+
+[node name="PlainWetDirt3" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(647, 252)
+texture = ExtResource("17_axu8x")
+
+[node name="SunFlowerSeedsBagItem" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(65, 230)
+scale = Vector2(0.453125, 0.453125)
+texture = ExtResource("18_qbq0a")
+
+[node name="Sprinkler" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(229, 201)
+texture = ExtResource("19_ucd6c")
+
+[node name="PlantedSunFlowers" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(297, 253)
+texture = ExtResource("20_vs47q")
+
+[node name="SecondGrowSunFlowers" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(474, 252)
+texture = ExtResource("21_vnu5o")
+
+[node name="WetPlawedDirt" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(119, 252)
+texture = ExtResource("16_ug3c2")
+
+[node name="FullGrowSunFlowers" type="Sprite2D" parent="TutorialScript/Background/PlantadoRegado"]
+position = Vector2(645, 250)
+texture = ExtResource("22_1nu7h")
+
+[node name="WaterExample" type="CanvasGroup" parent="TutorialScript/Background"]
+visible = false
+
+[node name="PlainTerrain" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(74, 188)
+texture = ExtResource("12_f608m")
+
+[node name="PlainTerrain2" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(330, 188)
+texture = ExtResource("12_f608m")
+
+[node name="PlainTerrain3" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(458, 188)
+texture = ExtResource("12_f608m")
+
+[node name="PlainTerrain4" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(586, 188)
+texture = ExtResource("12_f608m")
+
+[node name="Aysa" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(74, 188)
+texture = ExtResource("23_27qhr")
+
+[node name="Cemento" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(202, 188)
+texture = ExtResource("24_25x6u")
+
+[node name="WaterTank" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(202, 188)
+texture = ExtResource("25_3jmy8")
+
+[node name="OpenPipeValve" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(331, 188)
+texture = ExtResource("26_vbley")
+
+[node name="PlainWetDirt" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(459, 188)
+texture = ExtResource("17_axu8x")
+
+[node name="Pipe" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(459, 188)
+texture = ExtResource("27_5856y")
+
+[node name="PlainWetDirt2" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(587, 188)
+texture = ExtResource("17_axu8x")
+
+[node name="AutoWaterer2" type="Sprite2D" parent="TutorialScript/Background/WaterExample"]
+position = Vector2(593, 186)
+texture = ExtResource("28_ytk5u")
+
+[node name="humidity_checkers_show" type="CanvasGroup" parent="TutorialScript/Background"]
+visible = false
+
+[node name="Waterer1Icon" type="Sprite2D" parent="TutorialScript/Background/humidity_checkers_show"]
+position = Vector2(111, 194)
+texture = ExtResource("29_7y5bf")
+
+[node name="Waterer2" type="Sprite2D" parent="TutorialScript/Background/humidity_checkers_show"]
+position = Vector2(364, 212)
+texture = ExtResource("30_ejb66")
+
+[node name="Waterer3Icon" type="Sprite2D" parent="TutorialScript/Background/humidity_checkers_show"]
+position = Vector2(569, 235)
+texture = ExtResource("31_xcblm")
+
+[node name="Waterer3Remote" type="Sprite2D" parent="TutorialScript/Background/humidity_checkers_show"]
+position = Vector2(571, 158)
+texture = ExtResource("32_v6auu")
 
 [connection signal="timeout" from="HumidityTimer" to="Grid" method="_onHumidityTimer"]
 [connection signal="inventoryFull" from="Market" to="Player" method="onInventoryFull"]
