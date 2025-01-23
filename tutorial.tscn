@@ -153,6 +153,7 @@ position = Vector2(576, 320)
 money = 1500
 
 [node name="ColorRect2" type="ColorRect" parent="Player"]
+visible = false
 z_index = 4
 offset_left = -412.0
 offset_top = -268.0

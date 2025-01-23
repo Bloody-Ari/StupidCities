@@ -22,7 +22,8 @@ func use(pos: Vector2, game_grid: GameGrid):
 					if game_grid.grid[cell].plant_state == "DrownedPlant":
 						game_grid.grid[cell].plant_state = "None"
 					else:
-						game_grid.PickedUpSeeds.emit(1)
+						if game_grid.grid[cell].plant_state != "Plowed":
+							game_grid.PickedUpSeeds.emit(1)
 						game_grid.grid[cell].plant_state = "None"
 			if game_grid.grid[cell].humidity >= 5:
 				game_grid.grid[cell].state = "PlainDirt"

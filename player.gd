@@ -99,12 +99,13 @@ func _adjust_hotbars():
 		if(item == null):
 			index += 1
 			continue
-		if(item.name == "Empty Plastic Bag" or item.name == "Sunflower Seeds Bag"):
+		if(item.name == "Sunflower Seeds Bag"):
 			#left_hotbar.position
 			bag_text = right_hotbar.get_child(0)
-			right_hotbar.set_item_text(index, str(index%10))
+			#right_hotbar.set_item_text(index, str(index%10))
 			if bag_text != null:
-				bag_text.set_position(Vector2(64*(index+1), 0))
+				bag_text.text = str(inventory[inventory.find(ToolList.tool_list["sunflower_seeds_bag"])].seeds_available)
+				bag_text.set_position(Vector2(64*(index-9)-32, 0))
 		index += 1
 	check_if_hotbar_is_full()
 
@@ -245,7 +246,7 @@ func _ready() -> void:
 	right_hotbar.add_item("2", preload("res://art/SunFlowerSeedsBagItem.png"), true)
 	
 	seeds_bag_quantity.text = str(inventory[3].seeds_available)
-	seeds_bag_quantity.set_position(Vector2(64*3-32, 0))
+	seeds_bag_quantity.set_position(Vector2(64*2-32, 0))
 	right_hotbar.add_child(seeds_bag_quantity)
 	empty_plastic_bag_quantity.text = str(inventory[4].quantity)
 	empty_plastic_bag_quantity.set_position(Vector2(64*3, 0))
@@ -266,10 +267,10 @@ func _ready() -> void:
 	
 	use_progress_bar.visible = false
 	use_progress_bar.min_value = 0
-	use_progress_bar.max_value = 2
+	use_progress_bar.max_value = 1.5
 	use_progress_bar.value = 0
 	use_progress_bar.size = Vector2(200, 20)
-	use_progress_bar.position = Vector2(position.x-100, position.y-100)
+	use_progress_bar.position = Vector2(position.x+280, position.y+100)
 	hotbars.add_child(use_progress_bar)
 	humidity_label.visible = true
 	add_child(humidity_label)

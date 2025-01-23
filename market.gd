@@ -16,11 +16,12 @@ func _onSellRightClick():
 	button.release_focus()
 
 func _onSellLeftClick():
-	if player.left_click_tool != null:
-		if player.left_click_tool.name != "Empty Plastic Bag" and player.right_click_tool.name != "Sunflower Seeds Bag":
-			player.money += int(70 * player.left_click_tool.price / 100)
-			player.remove_n_from_inventory(player.left_click_tool, 1)
-			grid.ChangeMoneroAmount.emit(player.money)
+	if player.left_click_tool == null:
+		return
+	if player.left_click_tool.name != "Empty Plastic Bag" and player.left_click_tool.name != "Sunflower Seeds Bag":
+		player.money += int(70 * player.left_click_tool.price / 100)
+		player.remove_n_from_inventory(player.left_click_tool, 1)
+		grid.ChangeMoneroAmount.emit(player.money)
 	button.release_focus()
 
 func _onMarketEnter(area_rid, area, area_shape_index, local_shape_index):
@@ -50,11 +51,15 @@ func _onSelectedFromBuyBar(item_index):
 				player.inventory[player.inventory.find(ToolList.tool_list["plastic_bag"])].quantity += 1
 				player.empty_plastic_bag_quantity.text = str(player.inventory[player.inventory.find(ToolList.tool_list["plastic_bag"])].quantity)
 			else:
-				player.append_to_inventory(ToolList.tool_list[buying_bar.get_item_text(item_index).split("-")[1]])
-				if(buying_bar.get_item_text(item_index).split("-")[1] == "basic_bucket"):
-					player.bucket_level_label.text = "Bucket water level: 00"
-					player.bucket_level_label.position = Vector2(-560, -290)
-					buying_bar.remove_item(item_index)
+				if(buying_bar.get_item_text(item_index).split("-")[1] == "sunflower_seeds_bag"):
+					player.inventory[player.inventory.find(ToolList.tool_list["sunflower_seeds_bag"])].seeds_available += 1
+					player._adjust_hotbars()
+				else:
+					player.append_to_inventory(ToolList.tool_list[buying_bar.get_item_text(item_index).split("-")[1]])
+					if(buying_bar.get_item_text(item_index).split("-")[1] == "basic_bucket"):
+						player.bucket_level_label.text = "Bucket water level: 00"
+						player.bucket_level_label.position = Vector2(-560, -290)
+						buying_bar.remove_item(item_index)
 		else:
 			print("Not enough money")
 	buying_bar.deselect_all()
@@ -101,6 +106,7 @@ func _ready() -> void:
 	buying_bar.add_item("10   -basic_bucket", preload("res://art/Balde.png"), true)
 	buying_bar.add_item("75   -humidity_checker2", preload("res://art/Waterer2.png"), true)
 	buying_bar.add_item("175  -humidity_checker3remote", preload("res://art/Waterer3Remote.png"))
+	buying_bar.add_item("10   -sunflower_seeds_bag", preload("res://art/SunFlowerSeedsBagItem.png"), true)
 	
 	
 	machine_buy_bar.add_item("100   -water_tank", preload("res://art/Machines/WaterTank.png"), true)

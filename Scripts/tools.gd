@@ -49,11 +49,11 @@ static var tool_list = {
 		25
 	),
 	"bolsa_de_pipas" : Tool.new(
-		"Bolsa de Pipas", 
+		"Bolsa de Pipas",
 		"Una bolsa con 10 semillas de girasol empaquetadas", 
 		preload("res://art/Bolsita10Pipas.png"), 
 		1,
-		120
+		329
 	),
 	"better_gloves" : Gloves.new(
 		"Guantes grandes",
