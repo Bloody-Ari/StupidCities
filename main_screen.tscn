@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4kax0nuednhg"]
 
-[ext_resource type="Script" path="res://main_screen.gd" id="1_hck56"]
+[ext_resource type="Script" uid="uid://cbp5wj7byar1y" path="res://main_screen.gd" id="1_hck56"]
 [ext_resource type="Texture2D" uid="uid://dxutl2f4qcslv" path="res://art/MainScreenBackrgound.png" id="1_trfg3"]
 [ext_resource type="FontFile" uid="uid://b66djal1k4bxf" path="res://art/FiraCodeNerdFont-Medium.ttf" id="2_wh67c"]
-[ext_resource type="Script" path="res://toggle_full_screen.gd" id="4_odvhr"]
+[ext_resource type="Script" uid="uid://bbx8dw3cyoy8b" path="res://toggle_full_screen.gd" id="4_odvhr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_hck56")

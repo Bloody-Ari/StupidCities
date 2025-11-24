@@ -1,12 +1,12 @@
 [gd_scene load_steps=22 format=3 uid="uid://bdjuw8s5gsoeg"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_i4noh"]
+[ext_resource type="Script" uid="uid://dmx35ji6meb8u" path="res://main.gd" id="1_i4noh"]
 [ext_resource type="PackedScene" uid="uid://bs8fj4wgjsj5v" path="res://player.tscn" id="2_57hw3"]
 [ext_resource type="Texture2D" uid="uid://dj4espi5u34ay" path="res://art/FirstTileSet.png" id="2_jr4sj"]
-[ext_resource type="Script" path="res://grid.gd" id="3_rs8bf"]
+[ext_resource type="Script" uid="uid://ddov0bggrwk4f" path="res://grid.gd" id="3_rs8bf"]
 [ext_resource type="Texture2D" uid="uid://bruiw0pi0gsqq" path="res://art/SecondTileSet.png" id="5_frh7r"]
-[ext_resource type="Script" path="res://humidity_timer.gd" id="5_o1msm"]
-[ext_resource type="Script" path="res://plants_grid.gd" id="6_u4k5j"]
+[ext_resource type="Script" uid="uid://b5l4d343db4pp" path="res://humidity_timer.gd" id="5_o1msm"]
+[ext_resource type="Script" uid="uid://b85guqf3r6mxj" path="res://plants_grid.gd" id="6_u4k5j"]
 [ext_resource type="PackedScene" uid="uid://byk58n8fk0m03" path="res://market.tscn" id="7_c74gr"]
 [ext_resource type="PackedScene" uid="uid://brfw4po7q85yl" path="res://aysa.tscn" id="10_mhnw1"]
 [ext_resource type="PackedScene" uid="uid://by5lqfbrkduik" path="res://wires.tscn" id="11_e7ngf"]
@@ -149,7 +149,7 @@ script = ExtResource("6_u4k5j")
 [node name="Player" parent="." instance=ExtResource("2_57hw3")]
 z_index = 3
 position = Vector2(576, 320)
-money = 10
+money = 2000
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

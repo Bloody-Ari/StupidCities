@@ -39,12 +39,24 @@ var right_bar_full = false
 var left_bar_full = false
 var inventory_lock = false
 @onready var inventory_full_dialog = $ColorRect
+@onready var not_enough_seeds_dialog = $NoEnoughSeeds
 
 signal using(cell: Vector2, tool: String, hand: String)
 signal longPressRight(game_grid)
 signal longPressLeft(game_grid)
 
 var showing_inventory_full_dialog = false
+
+func _onNotEnoughSeeds():
+	if not_enough_seeds_dialog.visible:
+		return
+	not_enough_seeds_dialog.visible = true
+	var timer = Timer.new()
+	add_child(timer)
+	timer.start(2)
+	timer.timeout.connect(func():
+		not_enough_seeds_dialog.visible = false
+	)
 
 func onInventoryFull():
 	if showing_inventory_full_dialog:
@@ -274,6 +286,9 @@ func _ready() -> void:
 	hotbars.add_child(use_progress_bar)
 	humidity_label.visible = true
 	add_child(humidity_label)
+	
+	inventory[4].not_enough_seeds.connect(_onNotEnoughSeeds)
+	
 
 #you have 2 different sets of hotbars, one for right click, 1-0 
 #and one for left click shift 1-0

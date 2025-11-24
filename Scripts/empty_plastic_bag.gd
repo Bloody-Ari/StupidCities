@@ -3,6 +3,8 @@ class_name EmptyPlasticBag
 
 var quantity = 0
 
+signal not_enough_seeds
+
 func use(pos: Vector2, game_grid: GameGrid):
 	var player = game_grid.get_node("../Player")
 	var seeds_index = 0
@@ -24,6 +26,7 @@ func use(pos: Vector2, game_grid: GameGrid):
 		game_grid.ChangedSeedAmount.emit(seed_quantity)
 		player.inventory[seeds_index].seeds_available = seed_quantity
 	else:
+		not_enough_seeds.emit()
 		print("Please collect more seeds")
 
 func _init(_name, _descriptcion, _texture, _level, _quantity, _price):
